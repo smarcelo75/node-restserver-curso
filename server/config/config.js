@@ -19,7 +19,7 @@ let urlDB;
 if (process.env.NODE_ENV === 'Dev') {
     urlDB = 'mongodb://localhost:27017/cafe';
 } else {
-    urlDB = 'mongodb+srv://marceserrano:1NjxlRpk5ncGn5Qd@clustermarce-qh0u7.mongodb.net/cafe';
+    urlDB = process.env.MONGO_URI;
 }
 
 //  Creamos una variable de entorno para almacenar la cadena de conexión
