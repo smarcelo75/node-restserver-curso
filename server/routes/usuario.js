@@ -4,10 +4,12 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const Usuario = require('../models/usuario');
+// exporto la funcion deconstruyendo
+const { verificaToken, verificaAdminRole } = require('../middlewares/autenticacion');
 const app = express();
 
-
-app.get('/usuario', (req, res) => {
+// Se define el middleware que se va a ejecutar cuando se quiera acceder a esa ruta
+app.get('/usuario', verificaToken, (req, res) => {
     let desde = req.query.desde || 0;
     desde = Number(desde);
     let limite = req.query.limite || 5;
@@ -36,7 +38,8 @@ app.get('/usuario', (req, res) => {
         });
 });
 
-app.post('/usuario', (req, res) => {
+// Se definen dos middleware, el segundo es para validar el rol administrador
+app.post('/usuario', [verificaToken, verificaAdminRole], (req, res) => {
     let body = req.body;
 
     let usuario = new Usuario({
@@ -63,7 +66,7 @@ app.post('/usuario', (req, res) => {
     });
 });
 
-app.put('/usuario/:id', (req, res) => {
+app.put('/usuario/:id', [verificaToken, verificaAdminRole], (req, res) => {
     let id = req.params.id;
     //  El metodo pick de underscore permite indicar que campos seran modificables del body que se recibe del request
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
@@ -83,7 +86,7 @@ app.put('/usuario/:id', (req, res) => {
     });
 });
 
-app.delete('/usuario/:id', (req, res) => {
+app.delete('/usuario/:id', [verificaToken, verificaAdminRole], (req, res) => {
 
     let id = req.params.id;
     let cambiarEstado = {
