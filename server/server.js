@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
 const portNumber = process.env.PORT;
+const path = require('path');
 
 // Los siguientes middelware permiten parsear el body de la peticion. 
 
@@ -17,6 +18,8 @@ app.use(bodyParser.json())
 
 // Se llama al configurador global de rutas
 app.use(require('./routes/index'));
+
+app.use(express.static(path.resolve(__dirname, '../public')));
 
 mongoose.connect(process.env.URLDB, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true },
     (err) => {

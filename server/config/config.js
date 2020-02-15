@@ -40,3 +40,9 @@ if (process.env.NODE_ENV === 'Dev') {
 
 //  Creamos una variable de entorno para almacenar la cadena de conexión
 process.env.URLDB = urlDB;
+
+// ====================
+// GOOGLE Client ID
+// ====================
+
+process.env.CLIENT_ID = process.env.CLIENT_ID || '423167117508-ueatert8ppc9c818gkjsrr59epqma1tg.apps.googleusercontent.com';
