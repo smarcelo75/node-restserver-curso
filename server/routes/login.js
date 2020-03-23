@@ -120,7 +120,7 @@ app.post('/google', async(req, res) => {
 
             usuario.save((err, usuarioDB) => {
                 if (err) {
-                    return status(500).json({
+                    return res.status(500).json({
                         ok: false,
                         err
                     });
